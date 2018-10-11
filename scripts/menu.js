@@ -1,80 +1,158 @@
-const menuData = {
-    "Home": {
-        "text": "Home",
-        "href": "/"
+const menu = {
+  'Home': {
+    'text': 'Home',
+    'href': 'index.html'
+  },
+  'Helpful-Material': {
+    'text': 'Helpful Material',
+    'href': 'helpful-material.html'
+  },
+  'Contributors': {
+    'text': 'Contributors',
+    'href': 'contributors.html'
+  },
+  'Tools': {
+      'text': 'Tools',
+      'href': 'tools.html',
+      'id': 'tools'
+  },
+  'Others': {
+    'Potato': {
+      'text': 'Potato',
+      'href': 'potato.html'
     },
-    "Helpful-Material": {
-        "text": "Helpful Material",
-        "href": "/helpful-material"
+    'Cheese': {
+      'text': 'Cheese!',
+      'href': 'cheese.html'
     },
-    "Contributors": {
-        "text": "Contributors",
-        "href": "/contributors"
+    'Invert': {
+      'text': 'Invert',
+      'href': '#',
+      'id': 'invert-btn'
     },
-    "The-Twist": {
-        "text": "The Twist",
-        "href": "#",
-        "id": "twist"
+    'Fireworks': {
+      'text': 'Fireworks',
+      'href': 'Fireworks.html',
+      'id': 'fireworks'
     },
-    "Potato": {
-        "text": "Potato",
-        "href": "/potato"
+    'Learn': {
+      'text': 'Learn!',
+      'href': 'wow.html',
+      'id': 'learn'
     },
-    "Cheese": {
-        "text": "Cheese!",
-        "href": "/cheese"
+    '4otakus': {
+      'text': '4otakus',
+      'href': '4otakus.html',
+      'id': '4otakus'
     },
-    "Tools": {
-        "text": "Tools",
-        "href": "/tools",
-        "id": "tools"
+    'Bubble': {
+      'text': 'Bubble',
+      'href': 'bubble.html',
+      'id': 'Bubble'
     },
-    "Invert": {
-        "text": "Invert",
-        "href": "#",
-        "id": "invert-btn"
+    'Canoi': {
+      'text': 'Canoi',
+      'href': 'canoi.html',
+      'id': 'Canoi'
     },
-    "Fireworks": {
-        "text": "Fireworks",
-        "href": "/fireworks",
-        "id": "fireworks"
+    'Colorgame': {
+      'text': 'Colorgame',
+      'href': 'colorgame.html',
+      'id': 'Colorgame'
     },
-    "Learn": {
-        "text": "Learn!",
-        "href": "/wow",
-        "id": "learn"
+    'Foxy': {
+      'text': 'Foxy',
+      'href': 'foxy.html',
+      'id': 'Foxy'
+    },
+	'cold-hacktomber': {
+      'text': 'cold-hacktomber',
+      'href': 'cold-hacktomber.html',
+      'id': 'cold-hacktomber'
+    },
+    'Gifheaven': {
+      'text': 'Gif Heaven',
+      'href': 'gifheaven.html',
+      'id': 'Gifheaven'
+    },
+    'Plainpage': {
+      'text': 'Plain Page',
+      'href': 'plain_page.html',
+      'id': 'Plainpage'
+    },
+    'Snek': {
+      'text': 'Snek',
+      'href': 'snek.html',
+      'id': 'Snek'
+    },
+    'Spooky': {
+      'text': 'Spooky',
+      'href': 'spooky.html',
+      'id': 'Spooky'
+    },
+    'Values': {
+      'text': 'Values',
+      'href': 'values.html',
+      'id': 'Values'
+    },
+    'Wow': {
+      'text': 'Wow',
+      'href': 'wow.html',
+      'id': 'Wow'
+    },
+    'Flappy': {
+      'text': 'Flappy Game',
+      'href': 'Flappy.html',
+      'id': 'Flappy'
+    },
+    'Stay Dry': {
+      'text': 'Stay Dry',
+      'href': '/dry',
+      'id': 'dry'
+    },
+    'Fancy CSS effects': {
+      'text': 'Fancy CSS',
+      'href': 'fancyCSS.html',
+      'id': 'fancy'
     }
+  }
 }
 
-class menu {
-    constructor() {
+function buildMenuHTML (obj = {}) {
+  var html = ''
+  var path = window.location.pathname.split('/')
+  var currentPage = path[path.length - 1] === '' ? '/' : path[path.length - 1]
 
+  Object.entries(obj).forEach(([key, item]) => {
+    if (key == 'Others') {
+      html += '<li class="dropdown">'
+      html += '<a class="nav-link nested-dropdown" href="#" id="Others"> Others </a>'
+      html += '<div class="dropdown-content">'
+      Object.entries(item).forEach(([key, item]) => {
+        let isCurrent = (currentPage === item.href)
+
+        html += '<div class="nav-item' + (isCurrent ? ' active' : '') + '">'
+        html += '<a class="nav-link" href="' + item.href + '"' + (item.id ? ' id="' + item.id + '"' : '') + '>' + item.text + '</a>'
+        html += '</div>'
+      })
+      html += '</div>'
+    } else {
+      if (currentPage.indexOf('.html') == -1) {
+        currentPage = currentPage.concat('.html');
+      }
+
+      let isCurrent = (currentPage === item.href)
+
+      html += '<li class="nav-item' + (isCurrent ? ' active' : '') + '">'
+      html += '<a class="nav-link" href="' + item.href + '"' + (item.id ? ' id="' + item.id + '"' : '') + '>' + item.text + '</a>'
+      html += '</li>'
     }
-
-    fetchMenu() {
-        return menuData
-    }
-
-    buildMenuHTML(obj = {}) {
-        var html = ''
-        var path = window.location.pathname.split('/')
-        var currentPage = path[path.length-1] === '' ? '/' : path[path.length-1]
-
-        Object.entries(obj).forEach(([key, item]) => {
-            let isCurrent = (currentPage === item.href ? true : false)
-
-            html += '<li class="nav-item' + (isCurrent ? ' active' : '') + '">'
-            html += '<a class="nav-link" href="' + item.href + '"' + (item.id ? ' id="'+ item.id + '"': '') + '>' + item.text + '</a>'
-            html += '</li>'
-        })
-        return document.getElementById('menu').innerHTML = html
-    }
-
-    build() {
-        const menu = this.fetchMenu()
-        this.buildMenuHTML(menu)
-    }
+  })
+  document.getElementById('menu').innerHTML = html
 }
 
-let m = new menu()
-m.build()
+function buildMenu () {
+  return buildMenuHTML(menu)
+}
+
+buildMenu()
